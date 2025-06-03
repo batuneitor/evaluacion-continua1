@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/instituto/student/")
@@ -29,9 +30,11 @@ public class StudentController {
     }
 
     @GetMapping("/{uid}")
-    public Student getStudentById(@PathVariable("uid") String uid) {
-        return studentService.findById(uid);
+    public ResponseEntity<Student> getStudentById(@PathVariable("uid") String uid) {
+        Student student = studentService.findById(uid);
+        return ResponseEntity.of(Optional.ofNullable(student));
     }
+
 
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
